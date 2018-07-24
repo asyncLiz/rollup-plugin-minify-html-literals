@@ -18,7 +18,7 @@ export interface Options {
    * Minify options, see
    * https://www.npmjs.com/package/minify-html-literals#options.
    */
-  options?: Partial<minify.Options>;
+  options?: minify.Options;
   /**
    * If true, any errors while parsing or minifying will abort the bundle
    * process. Defaults to false, which will only show a warning.

@@ -3,4 +3,4 @@
 /.nyc_output
 **/*.js
 **/*.map
-**/*(!declarations).d.ts
+**/*.d.ts
