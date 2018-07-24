@@ -18,7 +18,7 @@ export interface Options {
    * Minify options, see
    * https://www.npmjs.com/package/minify-html-literals#options.
    */
-  options?: minify.Options;
+  options?: Partial<minify.Options>;
   /**
    * If true, any errors while parsing or minifying will abort the bundle
    * process. Defaults to false, which will only show a warning.
@@ -43,7 +43,7 @@ export default function(options: Options = {}) {
     options.filter = createFilter(options.include, options.exclude);
   }
 
-  const minifyOptions = options.options || {};
+  const minifyOptions = <minify.DefaultOptions>options.options || {};
   return {
     name: 'minify-html-literals',
     transform(this: any, code: string, id: string) {
