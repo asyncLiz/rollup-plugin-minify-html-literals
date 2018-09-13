@@ -1,6 +1,6 @@
 /// <reference path="declarations.d.ts" />
 import * as minify from 'minify-html-literals';
-import { Plugin, SourceDescription } from 'rollup';
+import { Plugin, SourceDescription, TransformHook } from 'rollup';
 import { createFilter } from 'rollup-pluginutils';
 
 /**
@@ -35,7 +35,9 @@ export interface Options {
   filter?: (id: string) => boolean;
 }
 
-export default function(options: Options = {}): Plugin {
+export default function(
+  options: Options = {}
+): Plugin & { transform: TransformHook } {
   if (!options.minifyHTMLLiterals) {
     options.minifyHTMLLiterals = minify.minifyHTMLLiterals;
   }

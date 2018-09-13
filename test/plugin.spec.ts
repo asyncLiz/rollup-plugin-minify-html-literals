@@ -1,11 +1,19 @@
 import { expect } from 'chai';
 import * as minify from 'minify-html-literals';
 import * as path from 'path';
-import { match, spy } from 'sinon';
+import { PluginContext } from 'rollup';
+import { match, spy, SinonSpy } from 'sinon';
 import minifyHTML, { Options } from '../index';
 
 describe('minify-html-literals', () => {
   const fileName = path.resolve('test.js');
+  let context: PluginContext;
+  beforeEach(() => {
+    context = <any>{
+      warn: spy(),
+      error: spy()
+    };
+  });
 
   it('should return a plugin with a transform function', () => {
     const plugin = minifyHTML();
@@ -19,7 +27,7 @@ describe('minify-html-literals', () => {
     const plugin = minifyHTML(options);
     expect(options.minifyHTMLLiterals).to.be.a('function');
     const minifySpy = spy(options, 'minifyHTMLLiterals');
-    plugin.transform('return', fileName);
+    plugin.transform.apply(context, ['return', fileName]);
     expect(minifySpy.called).to.be.true;
   });
 
@@ -34,7 +42,7 @@ describe('minify-html-literals', () => {
 
     const plugin = minifyHTML(options);
     const minifySpy = spy(options, 'minifyHTMLLiterals');
-    plugin.transform('return', fileName);
+    plugin.transform.apply(context, ['return', fileName]);
     expect(
       minifySpy.calledWithMatch(
         match.string,
@@ -57,7 +65,7 @@ describe('minify-html-literals', () => {
       minifyHTMLLiterals: customMinify
     });
 
-    plugin.transform('return', fileName);
+    plugin.transform.apply(context, ['return', fileName]);
     expect(customMinify.called).to.be.true;
   });
 
@@ -68,14 +76,9 @@ describe('minify-html-literals', () => {
       }
     });
 
-    const context = {
-      warn: spy(),
-      error: spy()
-    };
-
     plugin.transform.apply(context, ['return', fileName]);
-    expect(context.warn.calledWith('failed')).to.be.true;
-    expect(context.error.called).to.be.false;
+    expect((<SinonSpy>context.warn).calledWith('failed')).to.be.true;
+    expect((<SinonSpy>context.error).called).to.be.false;
   });
 
   it('should fail is failOnError is true', () => {
@@ -86,26 +89,21 @@ describe('minify-html-literals', () => {
       failOnError: true
     });
 
-    const context = {
-      warn: spy(),
-      error: spy()
-    };
-
     plugin.transform.apply(context, ['return', fileName]);
-    expect(context.error.calledWith('failed')).to.be.true;
-    expect(context.warn.called).to.be.false;
+    expect((<SinonSpy>context.error).calledWith('failed')).to.be.true;
+    expect((<SinonSpy>context.warn).called).to.be.false;
   });
 
   it('should filter ids', () => {
     let options: Options = {};
-    let plugin = minifyHTML(options);
+    minifyHTML(options);
     expect(options.filter).to.be.a('function');
     expect(options.filter!(fileName)).to.be.true;
     options = {
       include: '*.ts'
     };
 
-    plugin = minifyHTML(options);
+    minifyHTML(options);
     expect(options.filter).to.be.a('function');
     expect(options.filter!(fileName)).to.be.false;
     expect(options.filter!(path.resolve('test.ts'))).to.be.true;
@@ -117,7 +115,7 @@ describe('minify-html-literals', () => {
     };
 
     const plugin = minifyHTML(options);
-    plugin.transform('return', fileName);
+    plugin.transform.apply(context, ['return', fileName]);
     expect(options.filter.calledWith(fileName)).to.be.true;
   });
 });
