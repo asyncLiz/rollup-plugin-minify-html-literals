@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.0.4"></a>
+
+## [1.0.4](https://github.com/asyncLiz/rollup-plugin-minify-html-literals/compare/v1.0.3...v1.0.4) (2018-09-19)
+
+### Bug Fixes
+
+- update minify-html-literals to not sort attributes or classes ([dc66de0](https://github.com/asyncLiz/rollup-plugin-minify-html-literals/commit/dc66de0))
+
 <a name="1.0.3"></a>
 
 ## [1.0.3](https://github.com/asyncLiz/rollup-plugin-minify-html-literals/compare/v1.0.2...v1.0.3) (2018-09-19)
