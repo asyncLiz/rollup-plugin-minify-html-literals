@@ -56,7 +56,7 @@
     "all": true
   },
   "dependencies": {
-    "minify-html-literals": "^1.1.1",
+    "minify-html-literals": "^1.1.2",
     "rollup-pluginutils": "^2.3.0"
   },
   "peerDependencies": {
