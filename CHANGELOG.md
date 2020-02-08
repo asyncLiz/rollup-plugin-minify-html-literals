@@ -1,6 +1,12 @@
-# Change Log
+# Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+### [1.2.3](https://github.com/asyncLiz/rollup-plugin-minify-html-literals/compare/v1.2.2...v1.2.3) (2020-02-08)
+
+### Bug Fixes
+
+- update to minify-html-literals v1.3.0 ([56cfb8d](https://github.com/asyncLiz/rollup-plugin-minify-html-literals/commit/56cfb8d3dfc5d828a824cbeb92c3aab53bda379a))
 
 <a name="1.2.2"></a>
 
