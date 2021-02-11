@@ -60,26 +60,26 @@
     "rollup-pluginutils": "^2.8.2"
   },
   "peerDependencies": {
-    "rollup": "^2.0.0"
+    "rollup": "^2.38.5"
   },
   "devDependencies": {
     "@types/chai": "^4.1.4",
-    "@types/mocha": "^5.2.5",
+    "@types/mocha": "8.2.0",
     "@types/node": "^14.14.25",
-    "@types/sinon": "^5.0.1",
+    "@types/sinon": "^9.0.10",
     "chai": "^4.1.2",
     "coveralls": "^3.0.2",
-    "husky": "^0.14.3",
-    "lint-staged": "^8.2.1",
-    "mocha": "^7.2.0",
+    "husky": "^5.0.9",
+    "lint-staged": "^10.5.4",
+    "mocha": "^8.2.1",
     "nyc": "^15.0.0",
-    "prettier": "^1.13.7",
-    "rimraf": "^2.6.2",
-    "rollup": "^2.0.0",
-    "sinon": "^6.1.4",
+    "prettier": "^2.2.1",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.38.5",
+    "sinon": "^9.2.4",
     "source-map-support": "^0.5.6",
     "standard-version": "^9.0.0",
-    "ts-node": "^7.0.0",
+    "ts-node": "^9.1.1",
     "typescript": "^4.0.3"
   }
 }

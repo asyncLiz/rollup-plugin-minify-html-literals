@@ -57,7 +57,7 @@ describe('minify-html-literals', () => {
   });
 
   it('should allow custom minifyHTMLLiterals', () => {
-    const customMinify = spy((source: string, options: minify.Options) => {
+    const customMinify = spy((source: string, options?: minify.Options) => {
       return minify.minifyHTMLLiterals(source, options);
     });
 
@@ -116,6 +116,6 @@ describe('minify-html-literals', () => {
 
     const plugin = minifyHTML(options);
     plugin.transform.apply(context, ['return', fileName]);
-    expect(options.filter.calledWith(fileName)).to.be.true;
+    expect(options.filter.calledWith()).to.be.true;
   });
 });
