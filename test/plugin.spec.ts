@@ -78,7 +78,7 @@ describe('minify-html-literals', () => {
 
     plugin.transform.apply(context, ['return', fileName]);
     expect((<SinonSpy>context.warn).calledWith('failed')).to.be.true;
-    expect((<any>context.error).called).to.be.false;
+    expect((<unknown>context.error as SinonSpy).called).to.be.false;
   });
 
   it('should fail is failOnError is true', () => {
@@ -90,7 +90,7 @@ describe('minify-html-literals', () => {
     });
 
     plugin.transform.apply(context, ['return', fileName]);
-    expect((<any>context.error).calledWith('failed')).to.be.true;
+    expect((<unknown>context.error as SinonSpy).calledWith('failed')).to.be.true;
     expect((<SinonSpy>context.warn).called).to.be.false;
   });
 
