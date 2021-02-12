@@ -1,18 +1,18 @@
 import { expect } from 'chai';
 import * as minify from 'minify-html-literals';
 import * as path from 'path';
-import { TransformPluginContext } from 'rollup';
+import { PluginContext } from 'rollup';
 import { match, spy, SinonSpy } from 'sinon';
 import minifyHTML, { Options } from '../index';
 
 describe('minify-html-literals', () => {
   const fileName = path.resolve('test.js');
-  let context: TransformPluginContext;
+  let context: PluginContext;
   beforeEach(() => {
-    context = (<unknown>{
+    context = <any>{
       warn: spy(),
       error: spy()
-    }) as TransformPluginContext;
+    };
   });
 
   it('should return a plugin with a transform function', () => {
@@ -57,7 +57,7 @@ describe('minify-html-literals', () => {
   });
 
   it('should allow custom minifyHTMLLiterals', () => {
-    const customMinify = spy((source: string, options?: minify.Options) => {
+    const customMinify = spy((source: string, options: minify.Options) => {
       return minify.minifyHTMLLiterals(source, options);
     });
 
@@ -78,7 +78,7 @@ describe('minify-html-literals', () => {
 
     plugin.transform.apply(context, ['return', fileName]);
     expect((<SinonSpy>context.warn).calledWith('failed')).to.be.true;
-    expect((<unknown>context.error as SinonSpy).called).to.be.false;
+    expect((<SinonSpy>context.error).called).to.be.false;
   });
 
   it('should fail is failOnError is true', () => {
@@ -90,7 +90,7 @@ describe('minify-html-literals', () => {
     });
 
     plugin.transform.apply(context, ['return', fileName]);
-    expect((<unknown>context.error as SinonSpy).calledWith('failed')).to.be.true;
+    expect((<SinonSpy>context.error).calledWith('failed')).to.be.true;
     expect((<SinonSpy>context.warn).called).to.be.false;
   });
 
@@ -116,6 +116,6 @@ describe('minify-html-literals', () => {
 
     const plugin = minifyHTML(options);
     plugin.transform.apply(context, ['return', fileName]);
-    expect(options.filter.calledWith()).to.be.true;
+    expect(options.filter.calledWith(fileName)).to.be.true;
   });
 });
