@@ -1,15 +1,14 @@
 import { expect } from 'chai';
 import * as minify from 'minify-html-literals';
 import * as path from 'path';
-import { PluginContext } from 'rollup';
-import { match, spy, SinonSpy } from 'sinon';
+import { match, SinonSpy, spy } from 'sinon';
 import minifyHTML, { Options } from '../index';
 
 describe('minify-html-literals', () => {
   const fileName = path.resolve('test.js');
-  let context: PluginContext;
+  let context: { warn: SinonSpy; error: SinonSpy };
   beforeEach(() => {
-    context = <any>{
+    context = {
       warn: spy(),
       error: spy()
     };
@@ -77,8 +76,8 @@ describe('minify-html-literals', () => {
     });
 
     plugin.transform.apply(context, ['return', fileName]);
-    expect((<SinonSpy>context.warn).calledWith('failed')).to.be.true;
-    expect((<SinonSpy>context.error).called).to.be.false;
+    expect(context.warn.calledWith('failed')).to.be.true;
+    expect(context.error.called).to.be.false;
   });
 
   it('should fail is failOnError is true', () => {
@@ -90,8 +89,8 @@ describe('minify-html-literals', () => {
     });
 
     plugin.transform.apply(context, ['return', fileName]);
-    expect((<SinonSpy>context.error).calledWith('failed')).to.be.true;
-    expect((<SinonSpy>context.warn).called).to.be.false;
+    expect(context.error.calledWith('failed')).to.be.true;
+    expect(context.warn.called).to.be.false;
   });
 
   it('should filter ids', () => {
