@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import * as minify from 'minify-html-literals';
 import * as path from 'path';
+import { TransformPluginContext } from 'rollup';
 import { match, SinonSpy, spy } from 'sinon';
 import minifyHTML, { Options } from '../index';
 
@@ -26,7 +27,10 @@ describe('minify-html-literals', () => {
     const plugin = minifyHTML(options);
     expect(options.minifyHTMLLiterals).to.be.a('function');
     const minifySpy = spy(options, 'minifyHTMLLiterals');
-    plugin.transform.apply(context, ['return', fileName]);
+    plugin.transform.apply((context as unknown) as TransformPluginContext, [
+      'return',
+      fileName
+    ]);
     expect(minifySpy.called).to.be.true;
   });
 
@@ -41,7 +45,10 @@ describe('minify-html-literals', () => {
 
     const plugin = minifyHTML(options);
     const minifySpy = spy(options, 'minifyHTMLLiterals');
-    plugin.transform.apply(context, ['return', fileName]);
+    plugin.transform.apply((context as unknown) as TransformPluginContext, [
+      'return',
+      fileName
+    ]);
     expect(
       minifySpy.calledWithMatch(
         match.string,
@@ -64,7 +71,10 @@ describe('minify-html-literals', () => {
       minifyHTMLLiterals: customMinify
     });
 
-    plugin.transform.apply(context, ['return', fileName]);
+    plugin.transform.apply((context as unknown) as TransformPluginContext, [
+      'return',
+      fileName
+    ]);
     expect(customMinify.called).to.be.true;
   });
 
@@ -75,7 +85,10 @@ describe('minify-html-literals', () => {
       }
     });
 
-    plugin.transform.apply(context, ['return', fileName]);
+    plugin.transform.apply((context as unknown) as TransformPluginContext, [
+      'return',
+      fileName
+    ]);
     expect(context.warn.calledWith('failed')).to.be.true;
     expect(context.error.called).to.be.false;
   });
@@ -88,7 +101,10 @@ describe('minify-html-literals', () => {
       failOnError: true
     });
 
-    plugin.transform.apply(context, ['return', fileName]);
+    plugin.transform.apply((context as unknown) as TransformPluginContext, [
+      'return',
+      fileName
+    ]);
     expect(context.error.calledWith('failed')).to.be.true;
     expect(context.warn.called).to.be.false;
   });
@@ -114,7 +130,10 @@ describe('minify-html-literals', () => {
     };
 
     const plugin = minifyHTML(options);
-    plugin.transform.apply(context, ['return', fileName]);
+    plugin.transform.apply((context as unknown) as TransformPluginContext, [
+      'return',
+      fileName
+    ]);
     expect(options.filter.calledWith(fileName)).to.be.true;
   });
 });
