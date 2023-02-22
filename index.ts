@@ -1,6 +1,11 @@
 /// <reference path="declarations.d.ts" />
 import * as minify from 'minify-html-literals';
-import { Plugin, SourceDescription, TransformHook } from 'rollup';
+import {
+  Plugin,
+  SourceDescription,
+  TransformHook,
+  PluginContext
+} from 'rollup';
 import { createFilter } from 'rollup-pluginutils';
 
 /**
@@ -47,9 +52,10 @@ export default function(
   }
 
   const minifyOptions = <minify.DefaultOptions>options.options || {};
+
   return {
     name: 'minify-html-literals',
-    transform(code: string, id: string) {
+    transform(this: PluginContext, code: string, id: string) {
       if (options.filter!(id)) {
         try {
           return <SourceDescription>options.minifyHTMLLiterals!(code, {
@@ -57,10 +63,14 @@ export default function(
             fileName: id
           });
         } catch (error) {
+          // check if Error ese treat as string
+          const message =
+            error instanceof Error ? error.message : (error as string);
+
           if (options.failOnError) {
-            this.error(error.message);
+            this.error(message);
           } else {
-            this.warn(error.message);
+            this.warn(message);
           }
         }
       }
